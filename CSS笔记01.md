@@ -1,7 +1,3 @@
-
-
----
-
 # CSS
 
 
@@ -60,7 +56,7 @@ em是相对长度单位。相对于当前对象内文本的字体尺寸（参考
 
   　　1. em的值并不是固定的；
 
-  　　2. em会继承父级元素的字体大小
+    　　2. em会继承父级元素的字体大小
 
  
 
@@ -334,4 +330,155 @@ margin-top margin-bottom…
 ![在这里插入图片描述](https://shimmerimg.oss-cn-beijing.aliyuncs.com/blog/screenshot/20210306203042.png)
 
 > 去掉ul li前面的`·` `list-style:none;`
+
+
+
+> 转自: https://blog.csdn.net/weixin_43200099/article/details/110574510
+
+
+
+# 圆角边框
+
+可以使盒子模型变圆角
+
+border-radius:length;(圆的半径）
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20201203212848164.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzIwMDA5OQ==,size_16,color_FFFFFF,t_70)
+当length数值越大弧形越明显。
+
+![在这里插入图片描述](https://shimmerimg.oss-cn-beijing.aliyuncs.com/blog/screenshot/20210311085443.png)
+
+> 注意：top-left这种顺序不能打乱；如果只写两个数字，则左上右下为一对，剩余两个为一对
+
+# 盒子阴影
+
+![在这里插入图片描述](https://shimmerimg.oss-cn-beijing.aliyuncs.com/blog/screenshot/20210311085601.png)
+
+![image-20210311090548966](https://shimmerimg.oss-cn-beijing.aliyuncs.com/blog/screenshot/20210311090549.png)
+
+# 文字阴影
+
+在CSS3中可以用 text-shadow设置阴影用于文字。写法和盒子阴影一样
+![在这里插入图片描述](https://shimmerimg.oss-cn-beijing.aliyuncs.com/blog/screenshot/20210311090622.png)
+
+
+
+
+
+
+
+# CSS浮动
+
+
+
+## 传统网页布局的三种方式
+
+网页布局的本质-用CSS来摆放盒子
+css提供了三种传统（pc）布局方式：
+
+### 标准流（普通流/文档流）
+
+即标签按照规定好默认方式排列。（块、行内元素、行内块元素。。。）
+
+
+
+![在这里插入图片描述](https://shimmerimg.oss-cn-beijing.aliyuncs.com/blog/screenshot/20210311090853.png)
+
+#### **网页布局第一准则**
+
+多个块级元素纵向排列找标准流，多个块级元素横向排列找浮动；
+
+### 网页布局第二准则
+
+先设置盒子的大小，再设置盒子的位置；**
+
+#### 什么是浮动？
+
+float属性用于创建浮动框，将其移到一边，直到左边缘或右边缘触及包含块或另一个浮动框的边缘。
+
+
+
+#### 浮动特性
+
+![在这里插入图片描述](https://shimmerimg.oss-cn-beijing.aliyuncs.com/blog/screenshot/20210311091248.png)
+
+脱离标准普通流的控制（浮）移动到指定位置（动）（脱标）。
+浮动的盒子不再保留原先的位置。
+
+如果多个盒子都设置了浮动，则它们会按照属性值（左浮动/右浮动）一行内显示并且顶端对齐排列。
+
+设置浮动后 div 位置会随着浏览器的大小变化
+
+浮动元素具有行内块元素的特点！（浮动可以设置给任何元素）
+首先行内元素本没有宽度和高度，但如果添加了浮动就有了；块级元素本来独占一行，但添加浮动以后就可以一行内有多个挨在一起（紧挨在一起中间没有缝隙）；如果块级盒子没有指定宽度，默认和父亲一样宽，但添加浮动以后，它的大小由内容的多少来决定（行内块元素的特点，即盒子是被内容撑起来的）
+
+浮动元素通常和标准流父级搭配使用
+
+
+
+### 一个元素浮动 兄弟元素也要浮动
+
+一个盒子里面有多个子盒子,如果其中一个盒子浮动了,那么其他兄弟也应该浮动,以防止引起问题。
+
+浮动的盒子只会影响浮动盒子后面的标准流不会影响前面的标准流.
+
+
+
+### 清除浮动
+
+如果都是标准流，不给父盒子设置高度，子盒子可以撑开父盒子；
+如果子盒子是浮动的，父盒子会高度塌陷（浮动相当于不占有位置，飘起来了）
+清除浮动以后，父亲就有了高度，也不会影响后面的标准流。
+
+#### 每个浮动标签添加css样式
+
+选择器`{clear:属性值;}`
+属性值：left right both(同时清除左右两侧浮动的影响）
+实际中我们只使用 clear:both;
+
+
+
+#### 清除浮动的策略：闭合浮动；
+
+闭合浮动即把浮动的影响限制在父元素中。
+
+
+
+##### 隔墙法
+
+就是在最后一个浮动的子元素后面添加一个额外标签添加清除浮动样式. 代码结构比较差难看, 写起来不方便, 不常用
+
+
+
+##### 清除浮动–父级添加 overflow
+
+给**父级**添加overflow属性，将其属性值设置为hidden、auto或scroll
+缺点：无法显示溢出盒子（会把溢出的部分切掉）
+
+![在这里插入图片描述](https://shimmerimg.oss-cn-beijing.aliyuncs.com/blog/screenshot/20210311093425.png)
+
+
+
+##### 清除浮动–：after 伪元素法
+
+相当于在大盒子内部后面插入一个盒子
+![在这里插入图片描述](https://shimmerimg.oss-cn-beijing.aliyuncs.com/blog/screenshot/20210311093502.png)
+在style里面写，然后让需要清除浮动的父盒子拥有clearfix这个属性。
+![在这里插入图片描述](https://shimmerimg.oss-cn-beijing.aliyuncs.com/blog/screenshot/20210311093502.png)
+![在这里插入图片描述](https://shimmerimg.oss-cn-beijing.aliyuncs.com/blog/screenshot/20210311093502.png)
+
+
+
+
+
+##### 清除浮动–：双伪元素法
+
+其实就是在盒子**前后都**插入盒子
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20201221173025160.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzIwMDA5OQ==,size_16,color_FFFFFF,t_70)
+
+![image-20210311093820859](https://shimmerimg.oss-cn-beijing.aliyuncs.com/blog/screenshot/20210311093820.png)
+
+
+
+---
 
