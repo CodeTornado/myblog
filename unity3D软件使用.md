@@ -585,7 +585,7 @@ Ambient Color选择喜欢的颜色提高场景亮度
 
 
 不管如何修改代码都会提示空指针异常>>重启 Unity 不再乱提示了
-```
+``` 
 NullReferenceException: Object reference not set to an instance of an object
 UnityEditor.Graphs.Edge.WakeUp () (at /Users/bokken/buildslave/unity/build/Editor/Graphs/UnityEditor.Graphs/Edge.cs:114)
 UnityEditor.Graphs.Graph.DoWakeUpEdges (System.Collections.Generic.List`1[T] inEdges, System.Collections.Generic.List`1[T] ok, System.Collections.Generic.List`1[T] error, System.Boolean inEdgesUsedToBeValid) (at /Users/bokken/buildslave/unity/build/Editor/Graphs/UnityEditor.Graphs/Graph.cs:387)
