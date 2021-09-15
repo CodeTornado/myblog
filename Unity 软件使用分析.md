@@ -387,3 +387,152 @@ Spatial Blend : 2D与3D声音切换。
 默认和主摄像机在一起
 
  
+
+# 2D 角色的移动
+
+## 横向移动
+
+给 2D 角色挂上一个新的脚本, 通过C#代码操控角色移动
+
+需要玩家输入的横向移动数值
+
+`float horizontalMove = Input.GetAxis(HorizontalStr);`
+
+编辑器中设置横向移动的速度
+
+`public float speed;`
+
+修改刚体的线速度
+
+移动时乘以每两帧执行的增量时间, 保持不同机器性能下匀速的移动
+
+
+
+```c#
+private Rigidbody2D rb;
+
+void Start(){rb = this.GetComponent<Rigidbody2D>();}
+
+rb.velocity = new Vector2(horizontalMove * speed * Time.fixedDeltaTime, rb.velocity.y);
+```
+
+
+
+## 向上跳跃
+
+
+
+获得玩家输入跳跃的指令
+
+`Input.GetButtonDown("Jump");` 返回bool 类型
+
+编辑器中设置向上跳跃的力量
+
+`public float jumpForce;`
+
+修改角色刚体的线速度, 修改 y 值
+
+```c#
+rb.velocity = new Vector2(rb.velocity.x, jumpForce * Time.deltaTime);
+```
+
+
+
+## 角色朝向
+
+根据玩家输入的水平移动数值, 来修改对应图像缩放的 x 值 
+
+```c#
+//角色图像转身
+        if (horizontalMove < 0f)
+        {
+            this.transform.localScale = new Vector3(-1, this.transform.localScale.y, this.transform.localScale.z);
+        }
+        else if (horizontalMove > 0f)
+        {
+            this.transform.localScale = new Vector3(1, this.transform.localScale.y, this.transform.localScale.z);
+
+        }
+```
+
+
+
+## 角色移动常见问题
+
+Q: 角色卡在墙角不下落
+
+A: 修改角色碰撞器为圆形, 并修改材质为光滑的
+
+
+
+Q: 角色冲起来时, 卡在地面上
+
+A: 将角色刚体中碰撞检查改为连续的, 将地面对撞机改为连续的
+
+
+
+Q: 角色跑动起来时屏幕出现白线
+
+A: 修改网格地面中缩放比例为 0.99, 或者配置中提升显示质量, 增强抗锯齿
+
+
+
+# 手机虚拟摇杆控制移动 Joystick 插件
+
+将摇杆拖拽到画布中
+代码中使用Joystick类, 通过摇杆获取用户输入操作 2D 角色
+
+将摇杆的引用拖入
+
+`public Joystick joystick;`
+
+## 水平移动
+
+```c#
+float horizontalMove = joystick.Horizontal;
+```
+
+## 跳跃
+
+```c#
+if (joystick.Vertical > 0.5f
+```
+
+## 下蹲
+
+```c#
+if (joystick.Vertical < -0.5f
+```
+
+
+
+# 滑动修改音量大小AudioMixer混音器
+
+资源窗口中新建混音器
+
+
+
+将音量改为代码可修改的 :
+
+- 混音器的Inspector窗口中点击**音量**名称 > 右键导出为代码变量并在混音器窗口重命名
+
+
+
+在游戏对象上新建代码, 获得混音器, 并修改他的**音量**变量
+
+`public AudioMixer audioMixer;`
+
+`public void SetVolume(float value)
+    {
+        audioMixer.SetFloat("MainVolume", value);
+    }`
+
+
+
+在画布中新建滑动按钮, 将Inspector窗口中 > Slider 脚本组件 > min max 改为混音器的值-80 0
+
+配置**更改滑动按钮**触发的函数为Dynamic float > **SetVolume**()
+
+
+
+最后将混音器绑定到多媒体源输出的位置

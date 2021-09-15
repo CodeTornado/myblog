@@ -425,5 +425,3 @@ edit> Preferences> Extermal Tools > Extermal scriptEditor > vs 2019
 
 `Object.FindObjectOfType<XXX>();`
 
-
-
