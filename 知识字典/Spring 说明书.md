@@ -35,7 +35,11 @@ spring 是轻量级用于简化服务端开发而诞生的框架
 # Spring 的Ioc 容器
 
 Ioc 也成为依赖注入（DI）。
-Ioc 容器构造并使用 bean 的过程，可以认为是bean 本身通过使用类的[构造](javascript:void(0)) 来控制它的依赖项[实例化](javascript:void(0))的逆过程
+Ioc 容器构造并使用 bean 的过程，可以认为是bean 本身通过使用类的[构造](javascript:void(0)) 来控制它的依赖项[实例化](javascript:void(0))的逆过程。
+
+类之间的关系，不再用代码控制，而是由 Spring 容器来控制。控制权有代码翻转到容器中，这就叫控制反转。
+
+初始化对象时，代码无序 new，而是把类之间的关系写到配置文件里。
 
 ------
 
@@ -334,6 +338,53 @@ public class DefaultServiceLocator {
 依赖注入 (DI) 是一个过程，对象只会在容器创建 bean 时自动注入依赖项，这是 bean 本身的逆过程。
 
 DI 原则使代码更清晰，当对象提供依赖关系时，解耦更有效。该对象不查找其依赖项，也不知道依赖项的位置或类。因此，您的类变得更容易测试，尤其是当依赖项位于接口或抽象基类上时，这允许在单元测试中使用存根或模拟实现。
+
+代码运行时，通过配置文件的描述给类通过注入另一个类。
+
+把类之间的依赖关系写到配置文件里，运行时会，根据配置文件，把 A 类注入到 B 类中。
+
+
+
+---
+
+简单的依赖注入程序
+
+一个` sayhello `程序
+
+xxx 属性
+
+get()
+
+set()
+
+sayHello() 调用 xxx 属性执行一个行为
+
+
+
+`xxx` 类
+
+sayTxt 字符串属性
+
+sayHello() 一个打印 sayTxt 的行为
+
+
+
+`SpringMain` 中抵用 xxx 类打印的行为
+
+```java
+ApplicationContext context = new ClassPathXml ApplicationContext("conf/applicationContext-*.xml");
+
+SayHello sayHello = (SayHello) Context.getBean("SayHello");
+sayHello.sayHello();
+```
+
+所有代码都没有 new 类的实例, 根据配置文件来初始化类
+
+通过 getBean 的方式获得类的实例
+
+这是种**低耦合**的写法，多个类之间耦合度很低。假如公司的程序代码要修改某个类，只需要再修改 1 处 xml 配置，其他的类很可能不用修改，减少不必要的工作
+
+---
 
 
 
@@ -785,4 +836,8 @@ public Object reimplement(Object o, Method m, Object[] args) throws Throwable {
 
 
 ## bean 的作用域
+
+
+
+---
 
