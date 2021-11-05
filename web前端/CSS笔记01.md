@@ -767,6 +767,8 @@ border-radius:length;(圆的半径）
 
 椭圆边框`border-radius: xpx ypx;`
 
+圆形边框`border-radius: 50%;`
+
 # 盒子阴影
 
 ![在这里插入图片描述](https://shimmerimg.oss-cn-beijing.aliyuncs.com/blog/screenshot/20210311085601.png)
@@ -841,7 +843,7 @@ float属性用于创建浮动框，将其移到一边，直到左边缘或右边
 
 选择器`{clear:属性值;}`
 属性值：left right both(同时清除左右两侧浮动的影响）
-实际中我们只使用 clear:both;
+实际中我们只使用 `clear:both; overflow: auto;`
 
 
 
@@ -1491,7 +1493,13 @@ tansform: translate\rotate\scale
 
 
 
-## 三维变化
+### 过渡transition
+
+让属性的变化更加平滑`transition: all 0.5s;`
+
+
+
+# 三维变化
 
 ```css
 /* 旋转 */
@@ -1693,4 +1701,34 @@ transform-style: float;
 
 </html>
 ```
+
+
+
+# 浏览器和样式支持
+
+目前市面上流行的浏览器是 chrome 和 IE、safari浏览器
+
+chrome 对 css3 的样式支持度最高，支持 85+%的 css 样式，跟迭代也很快。
+
+每个浏览器的内核都不一样，需要通过 css 前缀的方式激活某样式。
+
+哪个样式根据浏览器需要哪个前缀并准确的写出来，这相当的麻烦。可以通过引入代码生成插件来解决。`Autoprefixes`或 `css-auto-prefix`。还可以上 caiiuse 网站查询某样transform
+
+
+
+式各浏览器的支持情况，并找到前缀。
+
+
+
+## 渐进增强和优雅降级
+
+渐进增强：
+
+- 先让全部浏览器都支持某样式，再逐渐增加新样式
+
+优雅降级：
+
+- 先让支持度最高的一个浏览器完成全部样式的编写，再逐渐适配其他浏览器
+
+
 
